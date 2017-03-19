@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ready & load</title>
+	<script type="text/javascript">
+		window.ready = function(fn) {
+		    if (document.addEventListener) { // compatible with non-IE
+		        document.addEventListener("DOMContentLoaded",function() {
+		            // remove event to avoid repeated calls
+		            document.removeEventListener("DOMContentLoaded", arguments.callee, false);
+		            fn(); // call argument function
+		        },false);
+		    } else if (document.attachEvent){ // compatible with IE
+		        document.attachEvent("onreadystatechange",function() {
+		            if (document.readyState === "complete") {
+		                document.detachEvent("onreadystatechange",arguments.callee);
+		                fn();
+		            }
+		        });
+		    }
+		}
+
+		window.ready(function() {
+			console.log(document);
+			console.log(window.document);
+			document.write('<script type="text/javascript" src="script1.js"><\/script>');
+			document.open();
+      		document.write("<h1>Out with the old - in with the new!</h1>");
+			document.write('<script type="text/javascript" src="script.js"><\/script>');
+			alert("ok1");
+		});
+	</script>
+</head>
+<body>
+	<div >test</div>
+</body>
+</html>
